@@ -1,9 +1,11 @@
 const express = require('express');
-const router = express.Router();
 const Cart = require('../models/Cart');
 
+// Initialize Express router
+const app = express();
+
 // Route to list all carts
-router.get('/list', async (req, res) => {
+app.get('/carts/list', async (req, res) => {
     try {
         const carts = await Cart.find();
         res.json(carts);
@@ -33,4 +35,4 @@ app.post('/cart/add', async (req, res) => {
 
 // Add more routes as needed
 
-module.exports = router;
+module.exports = app;
