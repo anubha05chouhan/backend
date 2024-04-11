@@ -1,9 +1,11 @@
 const express = require('express');
-const router = express.Router();
 const Reservation = require('../models/Reservation');
 
+// Initialize Express app
+const app = express();
+
 // Route to list all reservations
-router.get('/list', async (req, res) => {
+app.get('/reservations/list', async (req, res) => {
     try {
         const reservations = await Reservation.find().populate('madeBy');
         res.json(reservations);
@@ -14,7 +16,7 @@ router.get('/list', async (req, res) => {
 });
 
 // Route to add a new reservation
-app.post('/reservation/add', async (req, res) => {
+app.post('/reservations/add', async (req, res) => {
     try {
         const { time } = req.body;
         const newReservation = new Reservation({ time });
@@ -27,7 +29,7 @@ app.post('/reservation/add', async (req, res) => {
 });
 
 // Route to delete a reservation
-app.delete('/reservation/delete/:id', async (req, res) => {
+app.delete('/reservations/delete/:id', async (req, res) => {
     try {
         const { id } = req.params;
         const deletedReservation = await Reservation.findByIdAndDelete(id);
@@ -43,4 +45,4 @@ app.delete('/reservation/delete/:id', async (req, res) => {
 
 // Add more routes as needed
 
-module.exports = router;
+module.exports = app;
