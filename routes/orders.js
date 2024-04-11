@@ -1,9 +1,11 @@
 const express = require('express');
-const router = express.Router();
 const Order = require('../models/Order');
 
+// Initialize Express router
+const app = express();
+
 // Route to list all orders
-router.get('/list', async (req, res) => {
+app.get('/orders/list', async (req, res) => {
     try {
         const orders = await Order.find().populate('items').populate('orderBy');
         res.json(orders);
@@ -15,4 +17,4 @@ router.get('/list', async (req, res) => {
 
 // Add more routes as needed
 
-module.exports = router;
+module.exports = app;
