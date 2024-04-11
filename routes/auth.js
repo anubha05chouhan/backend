@@ -28,7 +28,7 @@ app.post('/register', async (req, res) => {
 });
 
 // Route to handle user login and set token in a cookie
-app.post('/login', isLoggedIn, async (req, res) => {
+app.post('/login', async (req, res) => {
     try {
         const { username, password } = req.body;
         // Check if user exists
