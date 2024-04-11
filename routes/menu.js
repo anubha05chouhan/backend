@@ -1,11 +1,12 @@
 const express = require('express');
 const Menu = require('../models/Menu');
+const isLoggedIn = require('../middlewares/authMiddleware');
 
 // Initialize Express router
 const app = express();
 
 // Route to list all menus
-app.get('/menus/list', async (req, res) => {
+app.get('/menus/list', isLoggedIn, async (req, res) => {
     try {
         const menus = await Menu.find().populate('items');
         res.json(menus);
