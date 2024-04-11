@@ -1,11 +1,12 @@
 const express = require('express');
 const FoodItem = require('../models/FoodItem');
+const isLoggedIn = require('../middlewares/authMiddleware');
 
 // Initialize Express router
 const app = express();
 
 // Route to add a new food item
-app.post('/fooditems/add', async (req, res) => {
+app.post('/fooditems/add', isLoggedIn, async (req, res) => {
     // Your logic to add a new food item here
     if (req.user && req.user.role === 'admin') {
         try {
@@ -23,7 +24,7 @@ app.post('/fooditems/add', async (req, res) => {
 });
 
 // Route to delete a food item
-app.delete('/fooditems/:id', async (req, res) => {
+app.delete('/fooditems/:id', isLoggedIn, async (req, res) => {
     // Your logic to delete a food item here
     if (req.user && req.user.role === 'admin') {
         try {
@@ -43,7 +44,7 @@ app.delete('/fooditems/:id', async (req, res) => {
 });
 
 // Route to update a food item
-app.put('/fooditems/:id', async (req, res) => {
+app.put('/fooditems/:id', isLoggedIn, async (req, res) => {
     // Your logic to update a food item here
     if (req.user && req.user.role === 'admin') {
         try {
