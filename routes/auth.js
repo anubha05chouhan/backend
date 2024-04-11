@@ -1,8 +1,10 @@
 const express = require('express');
-const router = express.Router();
 const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
 const User = require('../models/User');
+
+// Initialize Express router
+const app = express();
 
 // Route to handle user registration
 app.post('/register', async (req, res) => {
@@ -48,4 +50,4 @@ app.post('/login', isLoggedIn, async (req, res) => {
     }
 });
 
-module.exports = router;
+module.exports = app;
