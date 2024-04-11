@@ -1,9 +1,11 @@
 const express = require('express');
-const router = express.Router();
 const Menu = require('../models/Menu');
 
+// Initialize Express router
+const app = express();
+
 // Route to list all menus
-router.get('/list', async (req, res) => {
+app.get('/menus/list', async (req, res) => {
     try {
         const menus = await Menu.find().populate('items');
         res.json(menus);
@@ -15,4 +17,4 @@ router.get('/list', async (req, res) => {
 
 // Add more routes as needed
 
-module.exports = router;
+module.exports = app;
