@@ -27,7 +27,7 @@ app.post('/register', async (req, res) => {
     }
 });
 
-// Route to handle user login and generate JWT token
+// Route to handle user login and set token in a cookie
 app.post('/login', isLoggedIn, async (req, res) => {
     try {
         const { username, password } = req.body;
@@ -43,7 +43,9 @@ app.post('/login', isLoggedIn, async (req, res) => {
         }
         // User authenticated, generate JWT token
         const token = jwt.sign({ username: user.username, role: user.role }, secretKey, { expiresIn: '1h' });
-        res.json({ token });
+        // Set token in a cookie
+        res.cookie('token', token, { httpOnly: true });
+        res.json({ message: 'Login successful' });
     } catch (error) {
         console.error('Error logging in user:', error);
         res.status(500).json({ message: 'Internal server error' });
@@ -53,6 +55,7 @@ app.post('/login', isLoggedIn, async (req, res) => {
 // Route to handle user logout
 app.post('/logout', (req, res) => {
     // Perform logout actions if any
+    res.clearCookie('token');
     res.json({ message: 'Logged out successfully' });
 });
 
