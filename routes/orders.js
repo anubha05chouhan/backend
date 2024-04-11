@@ -1,11 +1,12 @@
 const express = require('express');
 const Order = require('../models/Order');
+const isLoggedIn = require('../middlewares/authMiddleware');
 
 // Initialize Express router
 const app = express();
 
 // Route to list all orders
-app.get('/orders/list', async (req, res) => {
+app.get('/orders/list', isLoggedIn, async (req, res) => {
     try {
         const orders = await Order.find().populate('items').populate('orderBy');
         res.json(orders);
