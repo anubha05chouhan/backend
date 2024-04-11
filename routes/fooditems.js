@@ -1,11 +1,13 @@
 const express = require('express');
-const router = express.Router();
 const FoodItem = require('../models/FoodItem');
 
+// Initialize Express router
+const app = express();
+
 // Route to add a new food item
-router.post('/add', async (req, res) => {
+app.post('/fooditems/add', async (req, res) => {
     // Your logic to add a new food item here
-     if (req.user && req.user.role === 'admin') {
+    if (req.user && req.user.role === 'admin') {
         try {
             const { name, price } = req.body;
             const newFoodItem = new FoodItem({ name, price });
@@ -21,7 +23,7 @@ router.post('/add', async (req, res) => {
 });
 
 // Route to delete a food item
-router.delete('/:id', async (req, res) => {
+app.delete('/fooditems/:id', async (req, res) => {
     // Your logic to delete a food item here
     if (req.user && req.user.role === 'admin') {
         try {
@@ -41,9 +43,9 @@ router.delete('/:id', async (req, res) => {
 });
 
 // Route to update a food item
-router.put('/:id', async (req, res) => {
+app.put('/fooditems/:id', async (req, res) => {
     // Your logic to update a food item here
-      if (req.user && req.user.role === 'admin') {
+    if (req.user && req.user.role === 'admin') {
         try {
             const { id } = req.params;
             const { name, price } = req.body;
@@ -61,4 +63,4 @@ router.put('/:id', async (req, res) => {
     }
 });
 
-module.exports = router;
+module.exports = app;
