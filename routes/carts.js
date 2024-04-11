@@ -1,11 +1,12 @@
 const express = require('express');
 const Cart = require('../models/Cart');
+const isLoggedIn = require('../middlewares/authMiddleware');
 
 // Initialize Express router
 const app = express();
 
 // Route to list all carts
-app.get('/carts/list', async (req, res) => {
+app.get('/carts/list', isLoggedIn, async (req, res) => {
     try {
         const carts = await Cart.find();
         res.json(carts);
@@ -16,7 +17,7 @@ app.get('/carts/list', async (req, res) => {
 });
 
 // Route to add a food item to the cart
-app.post('/cart/add', async (req, res) => {
+app.post('/cart/add', isLoggedIn, async (req, res) => {
     try {
         const { foodItemId } = req.body;
         const foodItem = await FoodItem.findById(foodItemId);
