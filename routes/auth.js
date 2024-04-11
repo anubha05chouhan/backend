@@ -50,4 +50,10 @@ app.post('/login', isLoggedIn, async (req, res) => {
     }
 });
 
+// Route to handle user logout
+app.post('/logout', (req, res) => {
+    // Perform logout actions if any
+    res.json({ message: 'Logged out successfully' });
+});
+
 module.exports = app;
